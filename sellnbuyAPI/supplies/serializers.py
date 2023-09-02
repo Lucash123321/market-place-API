@@ -3,7 +3,7 @@ from .models import Supply, Comment, Message
 
 
 class SupplySerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField()
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Supply
