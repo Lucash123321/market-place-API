@@ -1,0 +1,517 @@
+---
+openapi: 3.0.0
+info:
+  title: sellnbuy API
+  description: API начинается с /api/v1/
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Lucash123321/market-place-API/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: /api/v1/
+tags:
+- name: SUPPLIES
+  description: товары
+- name: COMMENTS
+  description: Комментарии
+- name: AUTH
+- name: MESSAGE
+  description: Сообщения
+paths:
+  /supplies/:
+    get:
+      tags:
+      - SUPPLIES
+      description: Получить список всех товаров
+      parameters:
+      - name: supply_id
+        in: query
+        description: ID товара
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Список товаров
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supply'
+    post:
+      tags:
+      - SUPPLIES
+      description: Создать новый товар
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supply'
+      responses:
+        "200":
+          description: Новый товар
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supply'
+  /supplies/{supply_id}/:
+    get:
+      tags:
+      - SUPPLIES
+      description: Получить товар по ID
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID товар
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Товар
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supply'
+        "400":
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    put:
+      tags:
+      - SUPPLIES
+      description: Обновить товар по ID
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID товара
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supply'
+      responses:
+        "200":
+          description: Товар
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supply'
+        "400":
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      tags:
+      - SUPPLIES
+      description: Удалить товар по id
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "204":
+          content:
+            application/json:
+              schema: { }
+          description: ''
+    patch:
+      tags:
+      - SUPPLIES
+      description: Частично обновить товар по id
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID товара
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supply'
+      responses:
+        "200":
+          description: Товар
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supply'
+        "400":
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /supplies/{supply_id}/comments/:
+    get:
+      tags:
+      - COMMENTS
+      description: Получить список всех комментариев для товара
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+    post:
+      tags:
+      - COMMENTS
+      description: Создать новый комментарий для товара
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema: {}
+  /supply/{supply_id}/comments/{comment_id}/:
+    get:
+      tags:
+      - COMMENTS
+      description: Получить комментарий для товара по ID
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        description: ID комментария
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema: {}
+    put:
+      tags:
+      - COMMENTS
+      description: Обновить комментарий для товара по ID
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        description: ID комментария
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema: {}
+    delete:
+      tags:
+      - COMMENTS
+      description: Удалить комментарий для товара по ID
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        description: ID комментария
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "204":
+          content:
+            application/json:
+              schema: { }
+          description: ''
+    patch:
+      tags:
+      - COMMENTS
+      description: Частично обновить комментарий для товара по ID
+      parameters:
+      - name: supply_id
+        in: path
+        description: ID публикации
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        description: ID комментария
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema: {}
+  /token/:
+    post:
+      tags:
+      - AUTH
+      description: Получить JWT-токен
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/token_body'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTToken'
+        "400":
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /token/refresh/:
+    post:
+      tags:
+      - AUTH
+      description: Обновить JWT-токен
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/token_refresh_body'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token_refresh_body'
+  /send-message/:
+    get:
+      tags:
+      - MESSAGE
+      description: Получить список всех сообщений
+      parameters: []
+      responses:
+        "200":
+          description: Список сообщений
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+    post:
+      tags:
+      - MESSAGE
+      description: Отправить сообщение
+      parameters:
+      - name: to
+        in: query
+        description: Получатель
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendmessage_body'
+      responses:
+        "200":
+          description: Получить список сообщений
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+components:
+  schemas:
+    Supply:
+      title: Товар
+      required:
+      - text
+      type: object
+      properties:
+        supply_id:
+          title: ID  товара
+          type: integer
+          readOnly: true
+        desc:
+          title: Описание товара
+          type: string
+        user:
+          title: ID пользователя
+          type: integer
+          readOnly: true
+        time:
+          title: Дата публикации
+          type: string
+          format: date-time
+          readOnly: true
+        image:
+          title: Фотография товара
+          type: object
+          format: image
+      description: Описание товара
+    ValidationError:
+      title: Ошибка валидации
+      type: object
+      properties:
+        field_name:
+          type: array
+          items:
+            type: string
+    JWTToken:
+      title: JWT Токен
+      type: object
+      properties:
+        access:
+          title: access токен
+          type: string
+        refresh:
+          title: refresh токен
+          type: string
+    Comment:
+      title: Комментарий
+      required:
+      - text
+      type: object
+      properties:
+        comment_id:
+          title: ID  комментария
+          type: integer
+          readOnly: true
+        rating_value:
+          title: Оценка пользователя
+          maximum: 5
+          minimum: 1
+          type: string
+        text:
+          title: Текст комментария
+          type: string
+        user:
+          title: username пользователя
+          type: string
+          readOnly: true
+        time:
+          title: Дата публикации комментария
+          type: string
+          format: date-time
+          readOnly: true
+      description: Детальная информация комментария
+    Message:
+      title: Сообщения
+      type: object
+      properties:
+        user:
+          title: ID оправителя
+          type: integer
+          readOnly: true
+        to:
+          title: ID получателя
+          type: integer
+        text:
+          title: Текст сообщения
+          type: string
+        time:
+          title: Время отправления
+          type: string
+          format: date-time
+          readOnly: true
+    token_body:
+      required:
+      - password
+      - username
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+    token_refresh_body:
+      required:
+      - refresh
+      properties:
+        refresh:
+          type: string
+    sendmessage_body:
+      required:
+      - to
+      properties:
+        to:
+          type: string

@@ -4,8 +4,8 @@ from .views import SupplyViewSet, CommentViewSet, MessageViewSet
 
 router = DefaultRouter()
 
-router.register('supply', SupplyViewSet, basename='supplies')
-router.register('supply/(?P<id>\d+)/comment', CommentViewSet, basename='comment')
+router.register('supplies', SupplyViewSet, basename='supplies')
+router.register('supplies/(?P<id>\d+)/comments', CommentViewSet, basename='comments')
 router.register('send-message', MessageViewSet, basename='message')
 
 urlpatterns = [
