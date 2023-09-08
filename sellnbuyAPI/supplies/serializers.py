@@ -11,6 +11,11 @@ class SupplySerializer(serializers.ModelSerializer):
         fields = ('user', 'name', 'price', 'desc', 'image')
         read_only_fields = ('user', )
 
+    def validate(self, attrs):
+        if not self.context['request'].user.is_authenticated:
+            raise serializers.ValidationError
+        return attrs
+
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
@@ -23,7 +28,8 @@ class CommentSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         supply = get_object_or_404(Supply, id=self.context['view'].kwargs.get('id'))
         comment_exist = Comment.objects.filter(supply=supply)
-        if comment_exist or supply.user == self.context['request'].user:
+        if not self.context['request'].user.is_authenticated or \
+                comment_exist or supply.user == self.context['request'].user:
             raise serializers.ValidationError
         return attrs
 
